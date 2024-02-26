@@ -1,0 +1,27 @@
+class TanhActivation:
+    def forward(self, inputs):
+        self.inputs = inputs
+        return np.tanh(inputs)
+    
+    def backward(self, dvalues):
+        return dvalues * (1 - np.tanh(self.inputs) ** 2)
+
+# Create neural network
+nn_tanh = NeuralNetwork()
+
+# Add layers for Tanh activation
+nn_tanh.add_layer(DenseLayer(2, 4))
+nn_tanh.add_layer(TanhActivation())
+nn_tanh.add_layer(DenseLayer(4, 1))
+
+# Test input
+x = np.array([[0.1, 0.2]])
+
+# Forward pass
+output_tanh = nn_tanh.forward(x)
+print("Output with Tanh Activation:", output_tanh)
+
+# Backward pass (dummy gradients for demonstration)
+dummy_gradients = np.array([[0.1]])
+dvalues_tanh = nn_tanh.backward(dummy_gradients)
+print("Gradients after backward pass with Tanh Activation:", dvalues_tanh)
