@@ -1,0 +1,21 @@
+class LinearActivation:
+    def forward(self, inputs):
+        self.inputs = inputs
+        return inputs
+    
+    def backward(self, dvalues):
+        return dvalues
+
+nn_linear = NeuralNetwork()
+
+nn_linear.add_layer(DenseLayer(2, 4))
+nn_linear.add_layer(LinearActivation())
+nn_linear.add_layer(DenseLayer(4, 1))
+
+x = np.array([[0.1, 0.2]])
+
+output_linear = nn_linear.forward(x)
+print("Output with Linear Activation:", output_linear)
+
+dvalues_linear = nn_linear.backward(dummy_gradients)
+print("Gradients after backward pass with Linear Activation:", dvalues_linear)
