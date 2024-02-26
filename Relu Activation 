@@ -1,0 +1,23 @@
+class ReLUActivation:
+    def forward(self, inputs):
+        self.inputs = inputs
+        return np.maximum(0, inputs)
+    
+    def backward(self, dvalues):
+        dinputs = dvalues.copy()
+        dinputs[self.inputs <= 0] = 0
+        return dinputs
+
+nn_relu = NeuralNetwork()
+
+nn_relu.add_layer(DenseLayer(2, 4))
+nn_relu.add_layer(ReLUActivation())
+nn_relu.add_layer(DenseLayer(4, 1))
+
+x = np.array([[0.1, 0.2]])
+
+output_relu = nn_relu.forward(x)
+print("Output with ReLU Activation:", output_relu)
+
+dvalues_relu = nn_relu.backward(dummy_gradients)
+print("Gradients after backward pass with ReLU Activation:", dvalues_relu)
