@@ -1,0 +1,27 @@
+import numpy as np
+import matplotlib.pyplot as plt
+
+def estimate_coef(x, y):
+    n = np.size(x)
+
+    mean_x, mean_y = np.mean(x), np.mean(y)
+
+    SS_xy = np.sum(y*x - n*mean_y*mean_x)
+    SS_xx = np.sum(x*x - n*mean_x*mean_x)
+
+    b_1 = SS_xy / SS_xx
+    b_0 = mean_y - b_1*mean_x
+
+    return b_0, b_1
+
+x = np.array([1, 2, 3, 4, 5])
+y = np.array([2, 3, 4, 4, 5])
+
+intercept, slope = estimate_coef(x, y)
+
+plt.scatter(x, y, color='blue', label='Data points')
+plt.plot(x, slope*x + intercept, color='red', label='Linear regression line')
+plt.xlabel('X')
+plt.ylabel('Y')
+plt.legend()
+plt.show()
